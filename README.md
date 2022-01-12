@@ -1,0 +1,1 @@
+# belacom-test-swapi
