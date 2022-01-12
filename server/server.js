@@ -5,9 +5,9 @@ const cors = require("cors");
 const Axios = require("axios");
 const { response } = require("express");
 
-
+// add to use the json in the front
 app.use(express.json());
-
+// add to connect the server with the client
 app.use(cors());
 
 
@@ -41,7 +41,7 @@ app.post("/film_number", (req, res) => {
   })
 });
 
-// method async to wait for the api response
+// method async to wait for the api response and send data for the db
 async function getData(num) {
     const api_url = `https://swapi.dev/api/films/${num}/`
     const result = await Axios.get(api_url)
@@ -52,7 +52,7 @@ async function getData(num) {
 
 
 // route all
-app.get("/films", (req, res, next) => {
+app.get("/films", (req, res) => {
   db.all("SELECT * FROM films", [], (err, rows) => {
     if (err) {
       res.status(400).json({ "error": err.message });
@@ -63,7 +63,7 @@ app.get("/films", (req, res, next) => {
 });
 
 // route show
-app.get("/films/:id", (req, res, next) => {
+app.get("/films/:id", (req, res) => {
   db.get("SELECT * FROM films where id = ?", [req.params.id], (err, row) => {
     if (err) {
       res.status(400).json({ "error": err.message });
